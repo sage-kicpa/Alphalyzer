@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alphalyzer 통합 교육 일정</title>
+    <link rel="icon" href="input_file_1.png" type="image/png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'slate-gray': '#3D4551',
+                        'sky-blue': '#3490BF',
+                        'dark-carbon': '#1A1A1A',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans KR', 'Inter', sans-serif; scroll-behavior: smooth; }
+        .hero-gradient { background: linear-gradient(135deg, #1A1A1A 0%, #3D4551 100%); }
+        .premium-shadow { box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.3); }
+        
+        .event-badge { transition: transform 0.1s ease; cursor: pointer; }
+        .event-badge:hover { transform: scale(1.1); }
+        
+        .event-card { transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); border: 2px solid transparent; }
+        .event-focused { 
+            transform: scale(1.05); 
+            border-color: #3490BF; 
+            box-shadow: 0 20px 25px -5px rgba(52, 144, 191, 0.2), 0 10px 10px -5px rgba(52, 144, 191, 0.1);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-900 leading-relaxed min-h-screen flex flex-col justify-between">
+
+    <!-- 글로벌 브랜드 헤더 -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+            <a href="index.html" class="flex items-center gap-6">
+                <img src="input_file_10.png" alt="Alphalyzer" class="h-12 md:h-16 w-auto object-contain">
+                <div class="h-10 w-px bg-slate-200 hidden sm:block"></div>
+                <h1 class="text-2xl font-black text-slate-gray tracking-tight">통합 교육 일정</h1>
+            </a>
+            <div class="flex items-center gap-4">
+                <img src="input_file_12.png" alt="KICPA" class="h-6 w-auto block opacity-80 grayscale brightness-50">
+            </div>
+        </div>
+    </header>
+
+    <!-- 1. 상단 섹션 -->
+    <section class="bg-white py-16 border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row md:items-center justify-between gap-8">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-black mb-4 text-slate-900">
+                    교육 일정 및 <span class="text-sky-blue">수강 신청</span>
+                </h2>
+                <p class="text-slate-900 text-sm md:text-base max-w-2xl font-medium leading-relaxed">
+                    실시간 Zoom 교육부터 본회 오프라인 실습까지, 차수별 일정을 확인하세요. <br>
+                    캘린더의 <strong>배지를 클릭</strong>하면 우측 리스트에서 해당 과정을 바로 찾아 강조해 드립니다.
+                </p>
+            </div>
+            
+            <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 min-w-[240px] shadow-sm">
+                <span class="text-[15px] text-slate-900 font-bold block mb-2.5 text-center uppercase tracking-wider">2026 하반기 교육 운영 현황</span>
+                <div class="grid grid-cols-2 gap-4 text-center">
+                    <div class="border-r border-slate-200 pr-2">
+                        <span class="text-[12px] text-sky-blue font-bold block">온라인 Zoom</span>
+                        <span class="text-2xl font-black text-slate-700">4 <span class="text-xs font-normal text-slate-400">건</span></span>
+                    </div>
+                    <div>
+                        <span class="text-[12px] text-slate-500 font-bold block">본회 오프라인</span>
+                        <span class="text-2xl font-black text-slate-700">5 <span class="text-xs font-normal text-slate-400">건</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. 중앙 메인 섹션 -->
+    <div class="hero-gradient py-12 flex-grow">
+        <main class="max-w-7xl mx-auto px-6">
+            
+            <!-- 필터부 -->
+            <div class="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-4 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-2xl">
+                <div class="flex items-center gap-3">
+                    <i data-lucide="sliders-horizontal" class="text-sky-blue w-5 h-5"></i>
+                    <span class="text-xl font-extrabold text-white">교육 조건 필터</span>
+                </div>
+                <div class="grid grid-cols-3 gap-3 w-full md:w-auto">
+                    <button onclick="setFilter('all')" id="btn-filter-all" class="w-full md:w-40 py-2.5 rounded-xl text-lg font-bold transition-all bg-white text-slate-900 text-center">전체 일정</button>
+                    <button onclick="setFilter('online')" id="btn-filter-online" class="w-full md:w-40 py-2.5 rounded-xl text-lg font-bold transition-all bg-white/10 text-white border border-white/10 hover:bg-white/20 text-center">온라인 Zoom</button>
+                    <button onclick="setFilter('offline')" id="btn-filter-offline" class="w-full md:w-40 py-2.5 rounded-xl text-lg font-bold transition-all bg-white/10 text-white border border-white/10 hover:bg-white/20 text-center">본회 오프라인</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- 캘린더 영역 -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="bg-white rounded-2xl overflow-hidden premium-shadow border border-white/20">
+                        <div class="p-5 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+                            <button onclick="changeMonth(-1)" class="p-1 hover:bg-slate-200 rounded transition-colors"><i data-lucide="chevron-left" class="w-5 h-5 text-slate-400"></i></button>
+                            <h3 id="calendarTitle" class="text-xl md:text-2xl font-black text-slate-gray">2026년 05월</h3>
+                            <button onclick="changeMonth(1)" class="p-1 hover:bg-slate-200 rounded transition-colors"><i data-lucide="chevron-right" class="w-5 h-5 text-slate-400"></i></button>
+                        </div>
+                        <div class="grid grid-cols-7 bg-slate-50/50 text-center py-2 text-[10px] font-bold text-slate-400 uppercase border-b border-slate-100">
+                            <div class="text-red-400">일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div class="text-blue-400">토</div>
+                        </div>
+                        <div id="calendarDays" class="grid grid-cols-7 divide-x divide-y divide-slate-100 bg-white text-base"></div>
+                    </div>
+
+                    <div class="bg-white/5 border border-white/10 text-white rounded-2xl p-6 shadow-xl">
+                        <h4 class="text-lg font-bold mb-2 text-sky-blue flex items-center gap-2">
+                            <i data-lucide="info" class="w-5 h-5"></i> 캘린더 활용 팁
+                        </h4>
+                        <p class="text-xs text-slate-300 font-light leading-relaxed">
+                            날짜 아래 표시된 <span class="text-sky-blue font-bold">ZOOM</span> 또는 <span class="text-white font-bold">대면</span> 배지를 클릭하면 우측 리스트에서 해당 항목이 강조됩니다.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 리스트 영역 -->
+                <div class="lg:col-span-7 space-y-4" id="timelineListContainer"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 하단 푸터 -->
+    <footer class="bg-white py-10 border-t border-slate-100">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <img src="input_file_11.png" alt="KICPA" class="h-8 w-auto mb-3 mx-auto grayscale brightness-0 opacity-80">
+            <p class="text-[11px] text-slate-400 mb-6 uppercase font-bold tracking-widest">The Korean Institute of Certified Public Accountants</p>
+            <div class="text-[15px] text-slate-500 border-t border-slate-100 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <p class="font-medium">이메일 문의</p>
+                    <span class="text-slate-200">|</span>
+                    <p class="text-slate-600">alphalyzer@kicpa.kr</p>
+                </div>
+                <p class="text-[15px] text-slate-400 font-medium">© 2026 KICPA. ALL RIGHTS RESERVED.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 하이퍼링크가 적용된 이벤트 데이터
+        const eventsData = [
+            { id: 101, year: 2026, month: 5, day: 18, time: "13:00~17:00", order: "기존 1차", method: "offline", location: "본회 5층 대강의실", isClosed: true, link: "https://kicpaacademy.com/product/alphalyzer-교육-1회/" },
+            { id: 1, year: 2026, month: 6, day: 5, time: "19:00~22:00", order: "상설 1차", method: "online", location: "실시간 Zoom 온라인", isClosed: false, link: "https://kicpaacademy.com/product/alphalyzer-교육-1차/" },
+            { id: 2, year: 2026, month: 6, day: 19, time: "14:00~18:00", order: "상설 2차", method: "offline", location: "본회 5층 대강의실", isClosed: false, link: "https://kicpaacademy.com/product/alphalyzer-교육-2차/" },
+            { id: 102, year: 2026, month: 7, day: 8, time: "13:00~18:00", order: "기존 2차", method: "offline", location: "본회 5층 대강의실", isClosed: true, link: "https://kicpaacademy.com/product/제2회-alphalyzer-안내-교육-신청/" },
+            { id: 3, year: 2026, month: 7, day: 24, time: "19:00~22:00", order: "상설 3차", method: "online", location: "실시간 Zoom 온라인", isClosed: false, link: "https://kicpaacademy.com/product/alphalyzer-교육-3차/" },
+            { id: 4, year: 2026, month: 8, day: 7, time: "14:00~18:00", order: "상설 4차", method: "offline", location: "본회 5층 대강의실", isClosed: false, link: "https://kicpaacademy.com/product/alphalyzer-교육-4차/" },
+            { id: 5, year: 2026, month: 8, day: 21, time: "19:00~22:00", order: "상설 5차", method: "online", location: "실시간 Zoom 온라인", isClosed: false, link: "https://kicpaacademy.com/product/alphalyzer-교육-5차/" },
+            { id: 6, year: 2026, month: 9, day: 11, time: "14:00~18:00", order: "상설 6차", method: "offline", location: "본회 5층 대강의실", isClosed: false, link: "https://kicpaacademy.com/product/alphalyzer-교육-6차/" },
+            { id: 7, year: 2026, month: 9, day: 30, time: "19:00~22:00", order: "상설 7차", method: "online", location: "실시간 Zoom 온라인", isClosed: false, link: "https://kicpaacademy.com/product/alphalyzer-교육-7차/" }
+        ];
+
+        const holidays2026 = {
+            "5-5": "어린이날", "5-24": "부처님오신날", "5-25": "대체공휴일",
+            "6-3": "지방선거", "6-6": "현충일", "8-15": "광복절",
+            "9-24": "추석", "9-25": "추석", "9-26": "추석"
+        };
+
+        const now = new Date();
+        let focusYear = now.getFullYear();
+        let focusMonth = now.getMonth() + 1;
+        if (focusMonth < 5) focusMonth = 5;
+        if (focusMonth > 9) focusMonth = 9;
+
+        const TODAY = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
+        let currentFilter = 'all';
+
+        window.onload = function() { 
+            renderCalendar(); 
+            renderTimeline(); 
+            lucide.createIcons(); 
+        }
+
+        function focusEventCard(id) {
+            const cards = document.querySelectorAll('.event-card');
+            cards.forEach(card => card.classList.remove('event-focused'));
+            const targetCard = document.getElementById(`event-card-${id}`);
+            if (targetCard) {
+                targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                targetCard.classList.add('event-focused');
+                setTimeout(() => { targetCard.classList.remove('event-focused'); }, 2500);
+            }
+        }
+
+        function renderCalendar() {
+            const container = document.getElementById('calendarDays');
+            document.getElementById('calendarTitle').innerText = `${focusYear}년 ${String(focusMonth).padStart(2, '0')}월`;
+            container.innerHTML = '';
+    
+            const firstDayIndex = new Date(focusYear, focusMonth - 1, 1).getDay();
+            const totalDays = new Date(focusYear, focusMonth, 0).getDate();
+
+            for (let i = 0; i < firstDayIndex; i++) container.appendChild(createDayCell('', true));
+
+            for (let day = 1; day <= totalDays; day++) {
+                const dateObj = new Date(focusYear, focusMonth - 1, day);
+                const dayOfWeek = dateObj.getDay();
+                const holidayName = holidays2026[`${focusMonth}-${day}`];
+                const isToday = (focusYear === TODAY.year && focusMonth === TODAY.month && day === TODAY.day);
+                
+                let colorClass = "text-slate-800";
+                if (dayOfWeek === 0 || holidayName) colorClass = "text-red-500";
+                else if (dayOfWeek === 6) colorClass = "text-blue-500";
+
+                const dayCell = createDayCell(day, false, isToday, colorClass, holidayName);
+        
+                eventsData.filter(e => e.year === focusYear && e.month === focusMonth && e.day === day).forEach(evt => {
+                    const b = document.createElement('div');
+                    let opacityClass = (currentFilter !== 'all' && evt.method !== currentFilter) ? "opacity-30" : "opacity-100";
+                    let badgeStyle = evt.isClosed ? "bg-slate-100 text-slate-400" : (evt.method === 'online' ? "bg-sky-blue text-white shadow-sm" : "bg-slate-700 text-white shadow-sm");
+
+                    b.className = `event-badge mt-1.5 text-[11px] font-bold py-1.5 px-1 rounded text-center ${opacityClass} ${badgeStyle}`;
+                    b.innerText = evt.isClosed ? '마감' : (evt.method==='online'?'ZOOM':'대면');
+                    b.onclick = (e) => { e.stopPropagation(); focusEventCard(evt.id); };
+                    dayCell.appendChild(b);
+                });
+                container.appendChild(dayCell);
+            }
+        }
+
+        function createDayCell(num, isDimmed, isToday, colorClass, holidayName) {
+            const d = document.createElement('div');
+            d.className = `calendar-cell p-2 min-h-[85px] border-b border-r border-slate-100 ${isDimmed ? 'dimmed bg-slate-50' : 'bg-white'}`;
+            let todayClass = isToday ? "bg-sky-blue text-white w-7 h-7 flex items-center justify-center rounded-full" : colorClass;
+            d.innerHTML = `
+                <div class="flex flex-col items-start">
+                    <span class="font-bold text-[13px] ${todayClass}">${num}</span>
+                    ${holidayName ? `<span class="text-[9px] text-red-400 font-medium leading-none mt-0.5">${holidayName}</span>` : ''}
+                </div>
+            `;
+            return d;
+        }
+
+        function changeMonth(dir) { focusMonth += dir; if(focusMonth < 5) focusMonth = 5; if(focusMonth > 9) focusMonth = 9; renderCalendar(); }
+
+        function setFilter(f) {
+            currentFilter = f;
+            const filters = ['all', 'online', 'offline'];
+            filters.forEach(item => {
+                const btn = document.getElementById(`btn-filter-${item}`);
+                const baseClass = "w-full md:w-40 py-2.5 rounded-xl text-lg font-bold transition-all text-center ";
+                btn.className = (item === f) ? baseClass + "bg-white text-slate-900 shadow-lg" : baseClass + "bg-white/10 text-white border border-white/10 hover:bg-white/20";
+            });
+            renderCalendar();
+            renderTimeline();
+        }
+
+        function renderTimeline() {
+            const container = document.getElementById('timelineListContainer');
+            container.innerHTML = '';
+            let sortedData = [...eventsData].sort((a, b) => new Date(a.year, a.month-1, a.day) - new Date(b.year, b.month-1, b.day));
+
+            let filtered = sortedData.filter(e => {
+                if (currentFilter === 'online') return e.method === 'online';
+                if (currentFilter === 'offline') return e.method === 'offline';
+                return true;
+            });
+
+            filtered.forEach(evt => {
+                const div = document.createElement('div');
+                div.id = `event-card-${evt.id}`;
+                const isOnline = evt.method === 'online';
+                const btnBgClass = isOnline ? 'bg-sky-blue shadow-sky-500/20' : 'bg-slate-700 shadow-slate-700/20';
+                const methodColor = isOnline ? 'text-sky-blue' : 'text-slate-500';
+
+                div.className = `event-card p-5 rounded-2xl flex justify-between items-center bg-white premium-shadow transition-transform hover:-translate-y-1 cursor-pointer ${evt.isClosed ? 'opacity-60 grayscale-[0.5]' : ''}`;
+        
+                div.innerHTML = `
+                    <div class="flex items-center gap-4">
+                        <div class="text-center bg-slate-50 p-2 rounded-lg border border-slate-100 min-w-[65px]">
+                            <div class="text-[14px] text-slate-400 font-bold">${evt.month}.${evt.day}</div>
+                            <div class="text-2xl font-black text-slate-700">${evt.day}</div>
+                        </div>
+                        <div>
+                            <div class="text-[15px] font-extrabold uppercase tracking-widest ${methodColor} mb-1">${isOnline ? '실시간 Zoom 온라인' : '본회 오프라인 집합'}</div>
+                            <h4 class="font-bold text-slate-800 text-xl">알파라이저 ${evt.order} 교육 과정</h4>
+                            <p class="text-sm text-slate-400 mt-1">${evt.time} | ${evt.location}</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <!-- 마감 여부와 상관없이 <a> 태그를 사용하여 하이퍼링크 활성화 -->
+                        <a href="${evt.link}" target="_blank" 
+                            class="inline-block px-5 py-2.5 rounded-xl font-bold border transition-all hover:scale-105 active:scale-95 
+                            ${evt.isClosed ? 'bg-slate-100 text-slate-400 border-slate-200 text-base' : 'text-white shadow-lg ' + btnBgClass + ' text-base'}">
+                            ${evt.isClosed ? '접수 마감' : '수강 신청'}
+                        </a>
+                    </div>
+               `;
+                container.appendChild(div);
+            });
+            lucide.createIcons();
+        }
+    </script>
+</body>
+</html>
