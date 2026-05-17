@@ -210,12 +210,20 @@
                 const dayOfWeek = dateObj.getDay();
                 const holidayName = holidays2026[`${focusMonth}-${day}`];
                 const isToday = (focusYear === TODAY.year && focusMonth === TODAY.month && day === TODAY.day);
-                
-                let colorClass = "text-slate-800";
-                if (dayOfWeek === 0 || holidayName) colorClass = "text-red-500";
-                else if (dayOfWeek === 6) colorClass = "text-blue-500";
+        
+                let colorClass = "text-slate-800"; // 평일 (진한 회색/검정)
+                let bgColorClass = "bg-slate-800";  // 오늘일 때 배경색
+        
+                if (dayOfWeek === 6) {
+                    colorClass = "text-blue-500";
+                    bgColorClass = "bg-blue-500";
+                } 
+                else if (dayOfWeek === 0 || holidayName) {
+                    colorClass = "text-red-500";
+                    bgColorClass = "bg-red-500";
+                }
 
-                const dayCell = createDayCell(day, false, isToday, colorClass, holidayName);
+                const dayCell = createDayCell(day, false, isToday, colorClass, holidayName, bgColorClass);
         
                 eventsData.filter(e => e.year === focusYear && e.month === focusMonth && e.day === day).forEach(evt => {
                     const b = document.createElement('div');
@@ -231,13 +239,15 @@
             }
         }
 
-        function createDayCell(num, isDimmed, isToday, colorClass, holidayName) {
+        function createDayCell(num, isDimmed, isToday, colorClass, holidayName, bgColorClass) {
             const d = document.createElement('div');
             d.className = `calendar-cell p-2 min-h-[85px] border-b border-r border-slate-100 ${isDimmed ? 'dimmed bg-slate-50' : 'bg-white'}`;
-            let todayClass = isToday ? "bg-sky-blue text-white w-7 h-7 flex items-center justify-center rounded-full" : colorClass;
+    
+            let dateMarkerClass = isToday ? `${bgColorClass} text-white w-7 h-7 flex items-center justify-center rounded-full` : colorClass;
+    
             d.innerHTML = `
                 <div class="flex flex-col items-start">
-                    <span class="font-bold text-[13px] ${todayClass}">${num}</span>
+                    <span class="font-bold text-[13px] ${dateMarkerClass}">${num}</span>
                     ${holidayName ? `<span class="text-[9px] text-red-400 font-medium leading-none mt-0.5">${holidayName}</span>` : ''}
                 </div>
             `;
@@ -291,7 +301,6 @@
                         </div>
                     </div>
                     <div class="text-right">
-                        <!-- 마감 여부와 상관없이 <a> 태그를 사용하여 하이퍼링크 활성화 -->
                         <a href="${evt.link}" target="_blank" 
                             class="inline-block px-5 py-2.5 rounded-xl font-bold border transition-all hover:scale-105 active:scale-95 
                             ${evt.isClosed ? 'bg-slate-100 text-slate-400 border-slate-200 text-base' : 'text-white shadow-lg ' + btnBgClass + ' text-base'}">
