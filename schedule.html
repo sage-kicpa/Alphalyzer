@@ -44,23 +44,29 @@
 
     <!-- 글로벌 브랜드 헤더 -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
-        <div class="max-w-7xl mx-auto px-3 py-2 md:px-6 md:py-4">
-
-            <div class="flex justify-end md:hidden mb-1">
-                <img src="input_file_12.png" alt="KICPA" class="h-3.5 w-auto opacity-70 grayscale brightness-50">
+        <div class="max-w-7xl mx-auto px-2 py-2 md:px-6 md:py-4">
+        
+            <!-- 1. KICPA 로고: 아주 작게 상단 우측 배치 (공간 확보를 위해) -->
+            <div class="flex justify-end md:hidden mb-0.5">
+                <img src="input_file_12.png" alt="KICPA" class="h-2.5 w-auto opacity-60 grayscale brightness-50">
             </div>
 
-            <div class="flex items-center justify-between gap-1">
-
-                <a href="index.html" class="flex items-center gap-2 sm:gap-4 md:gap-6 flex-1">
-                    <img src="input_file_10.png" alt="Alphalyzer" class="h-11 md:h-16 w-auto object-contain shrink-0">
+            <div class="flex items-center justify-between">
+                <!-- 2. 알파라이저 로고 & 타이틀 영역 (모바일 1줄 최적화) -->
+                <a href="index.html" class="flex items-center gap-1.5 sm:gap-4 flex-1">
+                    <!-- 로고 크기: 모바일에서 h-12(48px) ~ h-14(56px)까지 확대 -->
+                    <img src="input_file_10.png" alt="Alphalyzer" class="h-12 sm:h-14 md:h-16 w-auto object-contain shrink-0">
                 
-                    <div class="h-7 md:h-10 w-0.5 bg-slate-200 shrink-0"></div>
-                    <h1 class="text-[21px] sm:text-2xl md:text-3xl font-black text-slate-gray tracking-tighter whitespace-nowrap leading-none">
+                    <!-- 세로 구분선: 더 얇고 밀착되게 조절 -->
+                    <div class="h-7 md:h-10 w-px bg-slate-200 shrink-0"></div>
+                
+                    <!-- 타이틀: 텍스트를 text-[24px]로 대폭 키우고, 자간(tracking)을 매우 좁게(-0.05em) 설정 -->
+                    <h1 class="text-[23px] xs:text-[25px] sm:text-2xl md:text-3xl font-black text-slate-gray tracking-[-0.06em] whitespace-nowrap leading-none flex-1">
                         통합 교육 일정
                     </h1>
                 </a>
 
+                <!-- 3. 데스크탑용 KICPA 로고 -->
                 <div class="hidden md:block">
                     <img src="input_file_12.png" alt="KICPA" class="h-6 w-auto opacity-80 grayscale brightness-50">
                 </div>
