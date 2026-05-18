@@ -372,17 +372,30 @@
   flex-direction: column;
   z-index: 9999;
 ">
-  <!-- 상단 헤더 포인트 (KICPA 단색 #354755 솔리드 필 적용) -->
+  <!-- 상단 헤더 포인트 (KICPA 단색 #354755 솔리드 필 및 중앙 정렬 적용) -->
   <div style="
     background-color: #354755;
-    padding: 20px 24px;
+    padding: 24px 24px;
     color: #ffffff;
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    text-align: center;
   ">
-    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-      <div style="display: flex; flex-direction: column; gap: 6px;">
+    <div style="
+      padding-right: 20px;
+      padding-left: 20px;
+    ">
+      <h3 style="
+        font-size: 21px;
+        font-weight: 800;
+        line-height: 1.5;
+        margin: 0;
+        letter-spacing: -0.02em;
+        display: inline-block;
+      ">
+        <!-- 태그와 타이틀을 한 줄 내부로 묶어 무조건 동일 행 상에 연속해서 정렬되도록 구성 -->
         <span style="
           display: inline-block;
-          align-self: flex-start;
           background-color: rgba(255, 255, 255, 0.15);
           color: #bae6fd;
           border: 1px solid rgba(255, 255, 255, 0.2);
@@ -391,16 +404,34 @@
           padding: 2px 8px;
           border-radius: 4px;
           letter-spacing: 0.05em;
-        ">[공지]</span>
-        <h3 style="
-          font-size: 18px;
-          font-weight: 800;
-          line-height: 1.4;
-          margin: 6px 0 0 0;
-          letter-spacing: -0.02em;
-        ">알파라이저(Alphalyzer) 6~9월 온/오프라인 교육 통합 신청 안내</h3>
-      </div>
+          margin-right: 10px;
+          vertical-align: middle;
+          transform: translateY(-1.5px);
+          -webkit-transform: translateY(-1.5px);
+          flex-shrink: 0;
+        ">[공지]</span><span style="vertical-align: middle;">Alphalyzer  온/오프라인 교육 통합 신청 안내</span>
+      </h3>
     </div>
+    <!-- 우측 상단 닫기 X 버튼 -->
+    <button onclick="document.getElementById('kicpa-alphalyzer-popup').style.display='none'" style="
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      border: none;
+      background: transparent;
+      color: #ffffff;
+      cursor: pointer;
+      opacity: 0.7;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.2s;
+    " onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'" aria-label="닫기">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
   </div>
 
   <!-- 본문 컨텐츠 (글자 크기 및 문단 여백 최적화) -->
@@ -469,7 +500,7 @@
           text-align: center;
           flex-shrink: 0;
         ">신청 방법</span>
-        <span style="font-size: 14px; color: #1e293b; font-weight: 600;">하단 [교육 상세일정 및 신청하기] 버튼 클릭 후 일자별 선택</span>
+        <span style="font-size: 14px; color: #1e293b; font-weight: 600;">하단 [교육 신청 바로가기] 버튼 클릭 후 일자별 선택</span>
       </div>
     </div>
 
@@ -503,8 +534,8 @@
         flex-direction: column;
         gap: 5px;
       ">
-        <li style="font-weight: 500;">✔️ 오프라인 교육은 실습 중심으로 운영되며, 선착순으로 조기 마감될 수 있습니다.</li>
-        <li style="font-weight: 500;">✔️ 실시간 ZOOM 강의는 정해진 시간에 접속한 경우에 한해 교육 이수가 인정됩니다.</li>
+        <li style="font-weight: 500;">오프라인 교육은 실습 중심으로 운영되며, 선착순으로 조기 마감될 수 있습니다.</li>
+        <li style="font-weight: 500;">실시간 화상 강의는 정해진 시간에 접속한 경우에 한해 교육 이수가 인정됩니다.</li>
       </ul>
     </div>
 
@@ -523,7 +554,7 @@
       box-sizing: border-box;
       background-color: #2b8ac4;
       color: #ffffff;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       text-align: center;
       padding: 14px 0;
@@ -532,7 +563,7 @@
       box-shadow: 0 4px 6px -1px rgba(43, 138, 196, 0.2);
       transition: background-color 0.2s ease-in-out;
     " onmouseover="this.style.backgroundColor='#1f73a5'" onmouseout="this.style.backgroundColor='#2b8ac4'">
-      교육 상세일정 및 신청하기
+      교육 신청 바로가기
     </a>
   </div>
 
