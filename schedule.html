@@ -260,7 +260,7 @@
                 eventsData.filter(e => e.year === focusYear && e.month === focusMonth && e.day === day).forEach(evt => {
                     const b = document.createElement('div');
                     let opacityClass = (currentFilter !== 'all' && evt.method !== currentFilter) ? "opacity-30" : "opacity-100";
-                    let badgeStyle = evt.isClosed ? "bg-slate-100 text-slate-400" : (evt.method === 'online' ? "bg-sky-blue text-white shadow-sm" : "bg-slate-700 text-white shadow-sm");
+                    let badgeStyle = evt.isClosed ? "bg-slate-200 text-slate-600 font-bold" : (evt.method === 'online' ? "bg-sky-blue text-white shadow-sm" : "bg-slate-700 text-white shadow-sm");
 
                     b.className = `event-badge mt-1.5 text-[11px] font-bold py-1.5 px-1 rounded text-center ${opacityClass} ${badgeStyle}`;
                     b.innerText = evt.isClosed ? '마감' : (evt.method==='online'?'ZOOM':'대면');
